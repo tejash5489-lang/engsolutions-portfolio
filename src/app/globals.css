@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+:root {
+  /* Surfaces */
+  --background: #14161b;
+  --background-panel: #1a1d24;
+  --background-panel-raised: #20232b;
+
+  /* Text */
+  --foreground: #ecedf3;
+  --foreground-muted: #8d93a3;
+  --foreground-faint: #565c6b;
+
+  /* Borders */
+  --border: rgba(232, 234, 240, 0.1);
+  --border-strong: rgba(232, 234, 240, 0.2);
+
+  /* Signal accent — used sparingly */
+  --accent: #5b7fff;
+  --accent-soft: rgba(91, 127, 255, 0.14);
+
+  /* High-contrast CTA */
+  --cta-bg: #ecedf3;
+  --cta-fg: #14161b;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-panel: var(--background-panel);
+  --color-background-panel-raised: var(--background-panel-raised);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-muted: var(--foreground-muted);
+  --color-foreground-faint: var(--foreground-faint);
+
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-cta-bg: var(--cta-bg);
+  --color-cta-fg: var(--cta-fg);
+
+  --font-display: var(--font-display), ui-serif, Georgia, serif;
+  --font-body: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, "SFMono-Regular", monospace;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+/* Ambient hero orbs — slow, weightless drift behind the hero content */
+@keyframes drift-a {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(4%, -6%) scale(1.08); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-5%, 5%) scale(0.95); }
+}
+.animate-drift-a {
+  animation: drift-a 22s ease-in-out infinite;
+}
+.animate-drift-b {
+  animation: drift-b 26s ease-in-out infinite;
+}
+
+/* Traveling dashes along the signature graphic's edges — data-in-flight cue */
+@keyframes edge-flow {
+  to { stroke-dashoffset: -24; }
+}
+.animate-edge-flow {
+  stroke-dasharray: 4 8;
+  animation: edge-flow 1.8s linear infinite;
+}
+
+/* Gentle bob for the signature graphic, as if it has no weight */
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float-y {
+  animation: float-y 6s ease-in-out infinite;
+}
+
+/* Underline sweep for nav links */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* Respect reduced-motion preference for CSS keyframe/transition animations.
+   Motion-library animations are handled separately via MotionConfig. */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
