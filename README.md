@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Engsolutions Portfolio
+
+A personal engineering portfolio site — dark editorial design, scroll-triggered
+motion, and a working contact form.
+
+**Live:** [engsolutions-portfolio.netlify.app](https://engsolutions-portfolio.netlify.app)
+
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, Turbopack) + React 19 + TypeScript
+- [Tailwind CSS v4](https://tailwindcss.com)
+- [Motion](https://motion.dev) for scroll reveals, staggered entrances, and magnetic hover buttons
+- [Resend](https://resend.com) for delivering contact-form submissions by email
+
+## Sections
+
+Hero, Philosophy (about), Featured Projects (with a blueprint detail dialog per
+project), Expert Solutions (services), Client Endorsements (testimonials), and
+a Contact form with a global footer.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Contact form setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The contact form emails submissions via Resend instead of storing them in a
+database. To make it work locally:
 
-## Learn More
+1. Create a free account at [resend.com/signup](https://resend.com/signup) (no card required).
+2. In the dashboard, go to **API Keys** → **Create API Key**.
+3. Create a `.env.local` file in the project root with:
 
-To learn more about Next.js, take a look at the following resources:
+   ```
+   RESEND_API_KEY=your-api-key
+   CONTACT_TO_EMAIL=you@example.com
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   `CONTACT_TO_EMAIL` is where submissions get sent. The free Resend tier
+   sends from the shared `onboarding@resend.dev` address, so no custom domain
+   verification is required.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Without these variables the form fails gracefully with an error message
+instead of crashing.
 
-## Deploy on Vercel
+## Scripts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Command         | Description                       |
+| --------------- | ---------------------------------- |
+| `npm run dev`   | Start the dev server (Turbopack)   |
+| `npm run build` | Production build                   |
+| `npm run start` | Serve the production build         |
+| `npm run lint`  | Run ESLint                         |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+Deployed on [Netlify](https://netlify.com), which auto-detects the Next.js
+App Router and API routes with zero extra config. Set `RESEND_API_KEY` and
+`CONTACT_TO_EMAIL` as environment variables on the Netlify project before
+deploying.
